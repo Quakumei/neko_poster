@@ -15,15 +15,25 @@
 :-------------------------:|:-------------------------:|:-------------------------:
 ![image](https://user-images.githubusercontent.com/53406289/174437668-5cb004aa-df62-45f1-b935-619b2c3e7c65.png)  |  ![image](https://user-images.githubusercontent.com/53406289/174437672-2a58fe87-3b2c-41d4-9493-9e3eb5c67c4b.png) | ![image](https://user-images.githubusercontent.com/53406289/174437765-727ccf85-7c7d-412e-8c0b-e1558174d3ef.png)
 
-Вход в аккаунт             | Профиль                   |  Загрузка с анимацией!
-:-------------------------:|:-------------------------:|:-------------------------:
-![image](https://user-images.githubusercontent.com/53406289/174437870-446b906c-6a8b-479c-a125-3e802262183b.png) | ![image](https://user-images.githubusercontent.com/53406289/174437890-a9048275-1f84-4b85-a910-c8989c84656c.png) | ![image](https://user-images.githubusercontent.com/53406289/174437867-e485c887-5eef-41d9-81ea-88e18f18d35c.png)
-
-
+Вход в аккаунт             | Вход в аккаунт  (ошибка)           | Профиль                   |  Загрузка с анимацией!
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
+![image](https://user-images.githubusercontent.com/53406289/174437870-446b906c-6a8b-479c-a125-3e802262183b.png) | ![image](https://user-images.githubusercontent.com/53406289/174439107-c7f9f8d1-bfd8-4260-955c-00030000e888.png) | ![image](https://user-images.githubusercontent.com/53406289/174437890-a9048275-1f84-4b85-a910-c8989c84656c.png) | ![image](https://user-images.githubusercontent.com/53406289/174437867-e485c887-5eef-41d9-81ea-88e18f18d35c.png)
 
 # Архитектура
 ![graph](https://user-images.githubusercontent.com/53406289/174437229-663116c6-5b6d-4322-a0f4-c3b4c1cc45b2.svg)
 
-# Автор
+# Траблшутинг
+- Не работает логинка и выдает UnknownErrorCode? 
 
+Проверьте подключение к [серверу бекенда](https://nekoposter-backend.herokuapp.com/), если зайти через браузер должно выдавать в json формате not found.
+
+- Нажал на регистрацию \ логин и ничего не происходит
+
+Подождите секунды 2-3, т.к. бекенд на бесплатном хостинге, скорее всего он просто заводится. Запрос должен быть вскоре исполнен.
+
+- Пытаюсь запостить пост и ничего не происходит
+
+А вот это уже не баг. Функционал постов пока не реализован.
+
+# Автор
 Тампио Илья - [Telegram: @quakumei](https://t.me/Quakumei) - [VK: Тампио Илья](https://vk.com/idid388032588) 
