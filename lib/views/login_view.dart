@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neko_poster/constants/routes.dart';
+import 'package:neko_poster/services/api/rapid_api_service_exceptions.dart';
 import 'package:neko_poster/services/auth/shared_preferences_auth_service.dart';
 import 'package:neko_poster/utilities/dialogs.dart';
 
@@ -137,6 +138,16 @@ class _LoginViewState extends State<LoginView> {
                                       .pushNamedAndRemoveUntil(
                                     mainPageRoute,
                                     (route) => false,
+                                  );
+                                } on WrongPassword {
+                                  showErrorDialog(
+                                    context: context,
+                                    content: "Неправильный пароль!",
+                                  );
+                                } on UserDoesNotExist {
+                                  showErrorDialog(
+                                    context: context,
+                                    content: "Такого котика мы не знаем!",
                                   );
                                 } catch (e) {
                                   showErrorDialog(

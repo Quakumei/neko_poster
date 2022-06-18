@@ -18,7 +18,8 @@ class RapidApiService extends BasicApiService {
     switch (response.statusCode) {
       case 200:
         break;
-
+      case 400:
+        throw UserAlreadyExists();
       // Other cases
 
       case 500:
@@ -41,6 +42,10 @@ class RapidApiService extends BasicApiService {
       case 200:
         break;
 
+      case 404:
+        throw UserDoesNotExist();
+      case 403:
+        throw WrongPassword();
       // Other cases
 
       case 500:

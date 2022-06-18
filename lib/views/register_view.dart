@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neko_poster/constants/routes.dart';
+import 'package:neko_poster/services/api/rapid_api_service_exceptions.dart';
 import 'package:neko_poster/services/auth/shared_preferences_auth_service.dart';
 import 'package:neko_poster/utilities/dialogs.dart';
 
@@ -140,7 +141,8 @@ class _RegisterViewState extends State<RegisterView> {
                           }
                           return ElevatedButton(
                             onPressed: () async {
-                              String login = _login.text;
+                              String login =
+                                  _login.text.replaceFirst(RegExp(r"\s+$"), "");
                               String password = _password.text;
                               String repeatPassword = _repeatPassword.text;
                               if (login.isNotEmpty &&
@@ -164,6 +166,11 @@ class _RegisterViewState extends State<RegisterView> {
                                       .pushNamedAndRemoveUntil(
                                     mainPageRoute,
                                     (route) => false,
+                                  );
+                                } on UserAlreadyExists {
+                                  showErrorDialog(
+                                    context: context,
+                                    content: "Такой котик уже существует!",
                                   );
                                 } catch (e) {
                                   showErrorDialog(
