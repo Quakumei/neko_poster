@@ -4,6 +4,7 @@ import 'package:neko_poster/views/login_view.dart';
 import 'package:neko_poster/views/main_page_view.dart';
 import 'package:neko_poster/views/new_post_view.dart';
 import 'package:neko_poster/views/register_view.dart';
+import 'package:neko_poster/views/splash_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         registerRoute: (context) => const RegisterView(),
         mainPageRoute: (context) => const MainPageView(),
         newPostRoute: (context) => const NewPostView(),
+        splashRoute: (context) => const SplashView(),
       },
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -40,6 +42,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const LoginView();
+    return const SplashView();
   }
 }

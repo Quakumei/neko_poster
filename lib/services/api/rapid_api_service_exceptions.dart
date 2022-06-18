@@ -2,6 +2,10 @@
 class UnknownResponseCode implements Exception {
   final int statusCode;
   UnknownResponseCode(this.statusCode);
+  @override
+  String toString() {
+    return 'Instance of \'UnknownResponseCode\' --> $statusCode';
+  }
 }
 
 class InternalServerError implements Exception {}

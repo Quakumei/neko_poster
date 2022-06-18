@@ -77,7 +77,7 @@ class _ProfileViewState extends State<ProfileView> {
                       UserData(
                         (instanceSnapshot.connectionState ==
                                 ConnectionState.done)
-                            ? (snapshot.data ?? "joke") as String
+                            ? (snapshot.data ?? "loading...") as String
                             : "loading...",
                       ),
                     ),

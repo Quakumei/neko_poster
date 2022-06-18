@@ -7,7 +7,7 @@ Future<void> showErrorDialog({
 }) {
   return showGenereicDialog(
     context: context,
-    title: "Error occured...",
+    title: "Возник казус...",
     content: content,
     optionsBuilder: () => {'OK :(': null},
   );
@@ -16,9 +16,9 @@ Future<void> showErrorDialog({
 Future<bool> showLogOutDialog(BuildContext context) {
   return showGenereicDialog<bool>(
     context: context,
-    title: 'Sign out',
-    content: 'Are you sure want to sign out?',
-    optionsBuilder: () => {'Cancel': false, 'Log out': true},
+    title: 'Выйти',
+    content: 'Вы действительно хотите выйти?',
+    optionsBuilder: () => {'Отмена': false, 'Выйти': true},
   ).then((result) => result ?? false);
 }
 
@@ -28,8 +28,8 @@ Future<void> showSuccessDialog({
 }) {
   return showGenereicDialog(
     context: context,
-    title: "Success",
+    title: "Успех!",
     content: content,
-    optionsBuilder: () => {'Yay!': null},
+    optionsBuilder: () => {'Ура!': null},
   );
 }
