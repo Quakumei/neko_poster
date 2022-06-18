@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neko_poster/constants/image_assets.dart';
 import 'package:neko_poster/constants/routes.dart';
-import 'package:neko_poster/services/crud/datatypes.dart';
+import 'package:neko_poster/services/auth/shared_preferences_auth_service.dart';
+import 'package:neko_poster/services/models/model.dart';
 import 'package:neko_poster/utilities/dialogs.dart';
 import 'package:neko_poster/views/_widgets.dart';
 
@@ -57,7 +58,31 @@ class _ProfileViewState extends State<ProfileView> {
       body: SafeArea(
         child: ListView(
           children: [
-            getProfileCard(const UserData("druzhelubnyy")),
+            FutureBuilder(
+                future: SharedPreferencesAuthService.getInstance(),
+                builder: (context, instanceSnapshot) {
+                  switch (instanceSnapshot.connectionState) {
+                    case ConnectionState.none:
+                    case ConnectionState.waiting:
+                    case ConnectionState.active:
+                      return const CircularProgressIndicator();
+                    case ConnectionState.done:
+                      break;
+                  }
+                  final SharedPreferencesAuthService spas =
+                      instanceSnapshot.data as SharedPreferencesAuthService;
+                  return FutureBuilder(
+                    future: spas.userName,
+                    builder: (context, snapshot) => getProfileCard(
+                      UserData(
+                        (instanceSnapshot.connectionState ==
+                                ConnectionState.done)
+                            ? (snapshot.data ?? "joke") as String
+                            : "loading...",
+                      ),
+                    ),
+                  );
+                }),
           ],
         ),
       ),

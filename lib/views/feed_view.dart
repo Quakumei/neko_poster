@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:neko_poster/constants/image_assets.dart';
-import 'package:neko_poster/services/crud/datatypes.dart';
+import 'package:neko_poster/services/models/model.dart';
 import 'package:neko_poster/views/_widgets.dart';
 
 class FeedView extends StatefulWidget {

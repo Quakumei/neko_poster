@@ -1,3 +1,4 @@
+import 'package:neko_poster/constants/backend_config.dart';
 import 'package:neko_poster/services/api/rapid_api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,7 @@ class SharedPreferencesAuthService {
     SharedPreferences sharedPreferences,
   ) =>
       SharedPreferencesAuthService(
-        RapidApiService("https://hackaton-fastapi.herokuapp.com"),
+        RapidApiService(backendUrl),
         sharedPreferences,
       );
 
@@ -59,6 +60,9 @@ class SharedPreferencesAuthService {
     final String accessKey = currentAccessKey ?? "";
     return accessKey.isNotEmpty;
   }
+
+  Future<String> get userName async =>
+      _rapidApiService.getUsername(accessToken: currentAccessKey ?? "");
 
   String? get currentAccessKey =>
       _sharedPreferences.getString(accessKeyPreference);

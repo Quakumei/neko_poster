@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neko_poster/constants/routes.dart';
+import 'package:neko_poster/services/auth/shared_preferences_auth_service.dart';
 import 'package:neko_poster/utilities/dialogs.dart';
 
 class LoginView extends StatefulWidget {
@@ -108,28 +109,52 @@ class _LoginViewState extends State<LoginView> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          String login = _login.text;
-                          String password = _password.text;
-                          if (login.isNotEmpty && password.isNotEmpty) {
-                            try {
-                              print('login attempt: $login $password');
-                            } catch (e) {
-                              showErrorDialog(
-                                context: context,
-                                content: e.toString(),
-                              );
-                            }
+                      FutureBuilder(
+                        future: SharedPreferencesAuthService.getInstance(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                            case ConnectionState.waiting:
+                            case ConnectionState.active:
+                              return const CircularProgressIndicator();
+                            case ConnectionState.done:
+                              break;
                           }
+                          return ElevatedButton(
+                            onPressed: () async {
+                              String login = _login.text;
+                              String password = _password.text;
+                              if (login.isNotEmpty && password.isNotEmpty) {
+                                try {
+                                  SharedPreferencesAuthService spas = snapshot
+                                      .data as SharedPreferencesAuthService;
+                                  await spas.login(
+                                    username: login,
+                                    password: password,
+                                  );
+                                  if (!mounted) return;
+                                  await Navigator.of(context)
+                                      .pushNamedAndRemoveUntil(
+                                    mainPageRoute,
+                                    (route) => false,
+                                  );
+                                } catch (e) {
+                                  showErrorDialog(
+                                    context: context,
+                                    content: e.toString(),
+                                  );
+                                }
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.0),
+                              child: Text(
+                                "Войти",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20.0),
-                          child: Text(
-                            "Войти",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
                       ),
                       Row(
                         children: [

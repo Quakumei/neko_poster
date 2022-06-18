@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:like_button/like_button.dart';
 import 'package:neko_poster/constants/routes.dart';
-import 'package:neko_poster/services/crud/datatypes.dart';
+import 'package:neko_poster/services/models/model.dart';
 
 const innerPadding = 12.0;
 

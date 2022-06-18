@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:neko_poster/constants/routes.dart';
+import 'package:neko_poster/services/auth/shared_preferences_auth_service.dart';
 import 'package:neko_poster/utilities/dialogs.dart';
 
 class RegisterView extends StatefulWidget {
@@ -126,37 +127,61 @@ class _RegisterViewState extends State<RegisterView> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          String login = _login.text;
-                          String password = _password.text;
-                          String repeatPassword = _repeatPassword.text;
-                          if (login.isNotEmpty &&
-                              password.isNotEmpty &&
-                              repeatPassword.isNotEmpty) {
-                            try {
-                              if (password != repeatPassword) {
-                                throw "Пароли не совпадают";
-                              }
-                              if (password.length < 8) {
-                                throw "Пароли слабый";
-                              }
-                              print('register attempt: $login $password');
-                            } catch (e) {
-                              showErrorDialog(
-                                context: context,
-                                content: e.toString(),
-                              );
-                            }
+                      FutureBuilder(
+                        future: SharedPreferencesAuthService.getInstance(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.none:
+                            case ConnectionState.waiting:
+                            case ConnectionState.active:
+                              return const CircularProgressIndicator();
+                            case ConnectionState.done:
+                              break;
                           }
+                          return ElevatedButton(
+                            onPressed: () async {
+                              String login = _login.text;
+                              String password = _password.text;
+                              String repeatPassword = _repeatPassword.text;
+                              if (login.isNotEmpty &&
+                                  password.isNotEmpty &&
+                                  repeatPassword.isNotEmpty) {
+                                try {
+                                  if (password != repeatPassword) {
+                                    throw "Пароли не совпадают";
+                                  }
+                                  if (password.length < 8) {
+                                    throw "Пароли слабый";
+                                  }
+                                  SharedPreferencesAuthService spas = snapshot
+                                      .data as SharedPreferencesAuthService;
+                                  await spas.register(
+                                    username: login,
+                                    password: password,
+                                  );
+                                  if (!mounted) return;
+                                  await Navigator.of(context)
+                                      .pushNamedAndRemoveUntil(
+                                    mainPageRoute,
+                                    (route) => false,
+                                  );
+                                } catch (e) {
+                                  showErrorDialog(
+                                    context: context,
+                                    content: e.toString(),
+                                  );
+                                }
+                              }
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 20.0),
+                              child: Text(
+                                "Стать котиком",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          );
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20.0),
-                          child: Text(
-                            "Стать котиком",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
                       ),
                       Row(
                         children: [
